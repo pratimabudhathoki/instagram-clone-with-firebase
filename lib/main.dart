@@ -1,5 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_insta_clone/Screens/Post_screen/add_screen.dart';
+import 'package:flutter_insta_clone/Screens/Post_screen/list_screen.dart';
+import 'package:flutter_insta_clone/Screens/Post_screen/profile_screen.dart';
+import 'package:flutter_insta_clone/Screens/Post_screen/search_screen.dart';
 import 'package:flutter_insta_clone/Screens/splashscreen.dart';
 
 import 'Screens/home_page.dart';
@@ -17,7 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    
       debugShowCheckedModeBanner: false,
       title: 'flutter',
       theme: ThemeData(
@@ -40,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: HomePage(),
       bottomNavigationBar: BottomAppBar(
           child: Row(
@@ -62,6 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
           Spacer(),
           IconButton(
             onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchScreen(),
+                  ));
               setState(() {
                 currentPage = 1;
               });
@@ -76,12 +83,17 @@ class _MyHomePageState extends State<MyHomePage> {
           Spacer(),
           IconButton(
             onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddpostScreen(),
+                  ));
               setState(() {
                 currentPage = 2;
               });
             },
             icon: Icon(
-              Icons.ondemand_video,
+              Icons.add_outlined,
               color: currentPage == 2
                   ? Color.fromARGB(255, 219, 74, 74)
                   : Color.fromARGB(96, 49, 45, 45),
@@ -90,12 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
           Spacer(),
           IconButton(
             onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListScreen(),
+                  ));
               setState(() {
                 currentPage = 3;
               });
             },
             icon: Icon(
-              Icons.card_travel,
+              Icons.photo,
               color: currentPage == 3
                   ? Color.fromARGB(255, 219, 74, 74)
                   : Color.fromARGB(96, 49, 45, 45),
@@ -104,6 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
           Spacer(),
           IconButton(
             onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ));
               setState(() {
                 currentPage = 4;
               });

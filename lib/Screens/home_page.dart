@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_insta_clone/Screens/auth/login_screen.dart';
 import 'package:flutter_insta_clone/data/static_data.dart';
 import 'package:flutter_insta_clone/object.dart';
+import 'package:flutter_insta_clone/utils/utils.dart';
 import 'package:http/http.dart';
+
+import 'Post_screen/Message_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   int currentPage = 0;
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +32,17 @@ class _MyWidgetState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MessageScreen(),
+                  ));
               setState(() {
                 currentPage = 1;
               });
             },
             icon: Icon(
-              Icons.favorite_border,
+              Icons.chat,
               color: currentPage == 1
                   ? Color.fromARGB(255, 219, 74, 74)
                   : Color.fromARGB(96, 49, 45, 45),
@@ -39,12 +50,52 @@ class _MyWidgetState extends State<HomePage> {
           ),
           IconButton(
             onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Are you sure you what to logout?"),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
+
+                            setState(() {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()),
+                                  (route) => false);
+                            });
+                          },
+                          child: Text("yes"))
+                    ],
+                  );
+                },
+              );
+              // auth.signOut().then((value) {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => LoginScreen()),
+              //   );
+              // }).onError((error, stackTrace) {
+              //   utils().TostMessage(error.toString());
+              // });
+
               setState(() {
                 currentPage = 2;
               });
             },
             icon: Icon(
-              Icons.chat_bubble_outline_outlined,
+              Icons.logout,
               color: currentPage == 2
                   ? Color.fromARGB(255, 219, 74, 74)
                   : Color.fromARGB(96, 49, 45, 45),

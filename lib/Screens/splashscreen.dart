@@ -4,6 +4,8 @@ import 'package:flutter_insta_clone/Screens/auth/login_screen.dart';
 import 'package:flutter_insta_clone/Screens/home_page.dart';
 import 'package:flutter_insta_clone/main.dart';
 
+import '../firebase_services/splash_service.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -12,18 +14,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
+  SplashServices splashServices = SplashServices();
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([]);
     Future.delayed(Duration(seconds: 2), () {
       // Navigate to the main screen after the splash screen is finished
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ));
+      splashServices.splashScreen(context);
     });
   }
 

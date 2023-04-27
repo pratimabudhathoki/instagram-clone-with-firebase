@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_insta_clone/Screens/auth/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,7 @@ class _SiginScreenState extends State<SiginScreen> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final usernamecontroller = TextEditingController();
-  final usernumbercontroller = TextEditingController();
+  final numbercontroller = TextEditingController();
   // to create auth instance
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -48,13 +49,13 @@ class _SiginScreenState extends State<SiginScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: usernamecontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter username';
                           }
                           return null;
                         },
-                        controller: usernamecontroller,
                         decoration: InputDecoration(
                           hintText: " Username",
                           prefixIcon: Icon(Icons.person),
@@ -106,7 +107,7 @@ class _SiginScreenState extends State<SiginScreen> {
                           return null;
                         },
                         keyboardType: TextInputType.number,
-                        controller: usernumbercontroller,
+                        controller: numbercontroller,
                         decoration: InputDecoration(
                           hintText: "Phone",
                           prefixIcon: Icon(Icons.phone_android_rounded),
@@ -137,6 +138,14 @@ class _SiginScreenState extends State<SiginScreen> {
                                           .then((value) {
                                         setState(() {
                                           loading = false;
+                                          FirebaseFirestore.instance
+                                              .collection("users")
+                                              .doc(value.user?.uid)
+                                              .set({
+                                            "email": emailcontroller.text,
+                                            "username": usernamecontroller.text,
+                                            "phone": numbercontroller.text,
+                                          });
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(

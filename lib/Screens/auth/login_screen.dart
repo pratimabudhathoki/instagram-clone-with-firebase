@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_insta_clone/Screens/auth/login_with_phonenumber.dart';
 import 'package:flutter_insta_clone/Screens/auth/sigin_screen.dart';
 import 'package:flutter_insta_clone/main.dart';
 import 'package:flutter_insta_clone/utils/utils.dart';
@@ -26,23 +27,33 @@ class _LoginScreenState extends State<LoginScreen> {
         .signInWithEmailAndPassword(
             email: emailcontroller.text.toString(),
             password: passwordcontroller.text.toString())
-        .then((value) {})
-        .onError((error, stackTrace) {
-      utils().TostMessage(error.toString());
-    });
-    setState(() {
-      loading = false;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(),
-          ));
-    });
+        .then(
+      (value) {
+        utils().TostMessage(value.user!.email.toString());
+        setState(() {
+          loading = false;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyHomePage(),
+              ));
+        });
+      },
+    ).onError(
+      (error, stackTrace) {
+        setState(() {
+          loading = false;
+        });
+
+        utils().TostMessage(error.toString());
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -118,20 +129,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text("Dont have an account?"),
                           InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SiginScreen()),
-                                );
-                              },
-                              child: Text(
-                                " Sign up",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              )),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SiginScreen()),
+                              );
+                            },
+                            child: Text(
+                              " Sign up",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginWithPhonenumber(),
+                              ));
+                        },
+                        child: Text("Login with phone number"),
                       ),
                     ),
                   ],
