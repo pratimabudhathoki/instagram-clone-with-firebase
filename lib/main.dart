@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_insta_clone/Screens/Post_screen/add_screen.dart';
 import 'package:flutter_insta_clone/Screens/Post_screen/list_screen.dart';
-import 'package:flutter_insta_clone/Screens/Post_screen/profile_screen.dart';
+import 'package:flutter_insta_clone/profile_screen.dart';
 import 'package:flutter_insta_clone/Screens/Post_screen/search_screen.dart';
 import 'package:flutter_insta_clone/Screens/splashscreen.dart';
 

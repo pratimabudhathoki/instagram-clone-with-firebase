@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_insta_clone/Screens/auth/login_screen.dart';
+import 'package:flutter_insta_clone/chat_screens/chat_list.dart';
 import 'package:flutter_insta_clone/data/static_data.dart';
 import 'package:flutter_insta_clone/object.dart';
 import 'package:flutter_insta_clone/utils/utils.dart';
 import 'package:http/http.dart';
-
-import 'Post_screen/Message_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
